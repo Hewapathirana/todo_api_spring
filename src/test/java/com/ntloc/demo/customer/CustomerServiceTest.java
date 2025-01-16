@@ -1,7 +1,7 @@
 package com.ntloc.demo.customer;
 
 import com.ntloc.demo.exception.CustomerEmailUnavailableException;
-import com.ntloc.demo.exception.CustomerNotFoundException;
+import com.ntloc.demo.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,7 +50,7 @@ class CustomerServiceTest {
         //then
         assertThatThrownBy(() ->
                 underTest.getCustomerById(id))
-                .isInstanceOf(CustomerNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("Customer with id " + id + " doesn't found");
     }
     @Test
@@ -128,7 +128,7 @@ class CustomerServiceTest {
         //then
         assertThatThrownBy(() ->
                 underTest.updateCustomer(id, name, email, address))
-                .isInstanceOf(CustomerNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("Customer with id " + id + " doesn't found");
 
         verify(customerRepository, never()).save(any());
@@ -267,7 +267,7 @@ class CustomerServiceTest {
         //then
         assertThatThrownBy(() ->
                 underTest.deleteCustomer(id))
-                .isInstanceOf(CustomerNotFoundException.class)
+                .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("Customer with id " + id + " doesn't exist.");
         verify(customerRepository, never()).deleteById(any());
 

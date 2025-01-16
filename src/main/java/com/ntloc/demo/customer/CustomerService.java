@@ -1,7 +1,7 @@
 package com.ntloc.demo.customer;
 
 import com.ntloc.demo.exception.CustomerEmailUnavailableException;
-import com.ntloc.demo.exception.CustomerNotFoundException;
+import com.ntloc.demo.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class CustomerService {
 
     public Customer getCustomerById(Long id) {
         return customerRepository.findById(id).orElseThrow(() ->
-                new CustomerNotFoundException("Customer with id " + id + " doesn't found"));
+                new ResourceNotFoundException("Customer with id " + id + " doesn't found"));
     }
 
     public void createCustomer(CreateCustomerRequest createCustomerRequest) {
@@ -40,7 +40,7 @@ public class CustomerService {
 
     public void updateCustomer(Long id, String name, String email, String address) {
         Customer customer = customerRepository.findById(id).orElseThrow(() ->
-                new CustomerNotFoundException("Customer with id " + id + " doesn't found"));
+                new ResourceNotFoundException("Customer with id " + id + " doesn't found"));
         if (Objects.nonNull(name) && !Objects.equals(customer.getName(), name)) {
 
             customer.setName(name);
@@ -63,7 +63,7 @@ public class CustomerService {
     public void deleteCustomer(Long id) {
         boolean isExist = customerRepository.existsById(id);
         if (!isExist) {
-            throw new CustomerNotFoundException("Customer with id " + id + " doesn't exist.");
+            throw new ResourceNotFoundException("Customer with id " + id + " doesn't exist.");
         }
         customerRepository.deleteById(id);
     }
