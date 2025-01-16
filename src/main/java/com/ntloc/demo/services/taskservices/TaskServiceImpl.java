@@ -41,6 +41,7 @@ public class TaskServiceImpl implements TaskService {
         try {
             log.info("Creating task with request: {}", taskRequestDTO);
             Task task = taskRepository.save(taskMapper.toEntity(taskRequestDTO));
+            task.setIsCompleted(false);
             log.info("Task created successfully with ID: {}", task.getId());
             return taskMapper.toDTO(task);
         } catch (DataAccessException e) {
@@ -55,9 +56,11 @@ public class TaskServiceImpl implements TaskService {
             log.info("Marking task with ID: {} as completed", id);
             Task task = taskRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
-            task.setIsCompleted(true);
-            task = taskRepository.save(task);
-            log.info("Task with ID: {} marked as completed", id);
+            if (!task.getIsCompleted()) {
+                task.setIsCompleted(true);
+                task = taskRepository.save(task);
+                log.info("Task with ID: {} marked as completed", id);
+            }
             return taskMapper.toDTO(task);
         } catch (DataAccessException e) {
             log.error("SQL Error occurred while marking task as completed with ID: {}", id, e);
