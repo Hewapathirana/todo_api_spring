@@ -49,14 +49,14 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    /*@ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         for (FieldError error : ex.getBindingResult().getFieldErrors()) {
             errors.put(error.getField(), error.getDefaultMessage());
         }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
+    }*/
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST) // Set the HTTP status
     public ApiErrorResponse handleValidationExceptions(MethodArgumentNotValidException ex, HttpServletRequest request) {
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
                 .errors(errors)
                 .build();
     }
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    /*@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = ResourceNotFoundException.class)
     public ApiErrorResponse handleDataAccessException(DataAccessException ex,
                                                             HttpServletRequest request,
@@ -86,5 +86,5 @@ public class GlobalExceptionHandler {
                 .api(request.getMethod())
                 .timestamp(ZonedDateTime.now())
                 .build();
-    }
+    }*/
 }

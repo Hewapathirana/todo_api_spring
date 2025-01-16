@@ -29,6 +29,7 @@ public class TaskController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public GlobalResponse<TaskResponseDTO> createTask(@Valid @RequestBody TaskRequestDTO taskRequestDTO) {
         return GlobalResponse.<TaskResponseDTO>builder()
                 .success(true)
@@ -38,12 +39,12 @@ public class TaskController {
                 .build();
     }
 
-    @PatchMapping("/{id}/complete")
+    @PostMapping("/{id}/complete")
     public GlobalResponse<TaskResponseDTO> markTaskAsCompleted(@PathVariable Long id) {
         return GlobalResponse.<TaskResponseDTO>builder()
                 .success(true)
                 .message("Request successful")
-                .statusCode(HttpStatus.CREATED)
+                .statusCode(HttpStatus.OK)
                 .data(taskService.markTaskAsCompleted(id))
                 .build();
     }

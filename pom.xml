@@ -74,6 +74,12 @@
 			<artifactId>jakarta.el</artifactId>
 			<version>4.0.2</version> <!-- Use the latest version -->
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+			<version>5.2</version> <!-- Use the latest version compatible with your setup -->
+		</dependency>
+
 
 	</dependencies>
 
