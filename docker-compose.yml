@@ -35,12 +35,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+      - "5005:5005" # Expose debug port
     networks:
       - postgresql
     depends_on:
       - postgresql
     environment:
       SPRING_PROFILES_ACTIVE: docker # Optional: Use a Docker-specific profile if needed
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
 
 networks:
   postgresql:

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class TaskServiceImpl implements TaskService {
@@ -27,6 +29,8 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponsesDTO getRecentTasks() {
         try {
             log.info("Fetching recent tasks...");
+            List<Task> tasks = taskRepository.findTop5ByIsCompletedFalseOrderByCreatedAtDesc();
+            System.out.println(tasks);
             return TaskResponsesDTO.builder()
                     .taskResponseDTOList(this.taskMapper.toDTOList(taskRepository.findTop5ByIsCompletedFalseOrderByCreatedAtDesc()))
                     .build();
@@ -40,8 +44,8 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDTO createTask(TaskRequestDTO taskRequestDTO) {
         try {
             log.info("Creating task with request: {}", taskRequestDTO);
+            taskRequestDTO.setIsCompleted(false);
             Task task = taskRepository.save(taskMapper.toEntity(taskRequestDTO));
-            task.setIsCompleted(false);
             log.info("Task created successfully with ID: {}", task.getId());
             return taskMapper.toDTO(task);
         } catch (DataAccessException e) {
