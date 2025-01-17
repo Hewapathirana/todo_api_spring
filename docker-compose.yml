@@ -3,7 +3,7 @@ services:
     container_name: postgresql
     image: postgres:16.2
     environment:
-      POSTGRES_USER: ntloc
+      POSTGRES_USER: dasi
       POSTGRES_PASSWORD: password
     volumes:
       - postgresql:/var/lib/postgresql/data
@@ -12,6 +12,7 @@ services:
     networks:
       - postgresql
     restart: always
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:8.4
@@ -26,6 +27,20 @@ services:
     networks:
       - postgresql
     restart: always
+
+  app:
+    container_name: spring-boot-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - postgresql
+    depends_on:
+      - postgresql
+    environment:
+      SPRING_PROFILES_ACTIVE: docker # Optional: Use a Docker-specific profile if needed
 
 networks:
   postgresql:
