@@ -9,7 +9,6 @@ import com.ntloc.demo.model.Task;
 import com.ntloc.demo.repo.TaskRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -18,13 +17,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
 import static org.springframework.http.HttpMethod.POST;
 
 @Testcontainers
@@ -44,7 +41,7 @@ public class TodoIntegrationTest extends AbstractTestcontainersTest {
     @Test
     void testCreateTask() {
         // Given
-        TaskRequestDTO taskRequestDTO = createTaskRequest("", "Task Description");
+        TaskRequestDTO taskRequestDTO = createTaskRequest("New Task", "Task Description");
 
         // When
         ResponseEntity<GlobalResponse<TaskResponseDTO>> response = testRestTemplate.exchange(
