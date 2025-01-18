@@ -4,13 +4,11 @@ import com.ntloc.demo.dto.TaskRequestDTO;
 import com.ntloc.demo.dto.TaskResponseDTO;
 import com.ntloc.demo.dto.TaskResponsesDTO;
 
-import java.util.List;
-
 public interface TaskService {
     /**
      * Fetches the top 5 recent incomplete tasks, ordered by creation time in descending order.
      *
-     * @return a list of TaskRequestDTO objects representing recent incomplete tasks.
+     * @return a  TaskResponsesDTO objects representing recent incomplete tasks.
      */
     TaskResponsesDTO getRecentTasks();
 

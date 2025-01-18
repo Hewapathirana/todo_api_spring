@@ -29,14 +29,11 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponsesDTO getRecentTasks() {
         try {
             log.info("Fetching recent tasks...");
-            List<Task> tasks = taskRepository.findTop5ByIsCompletedFalseOrderByCreatedAtDesc();
-            System.out.println(tasks);
             return TaskResponsesDTO.builder()
                     .taskResponseDTOList(this.taskMapper.toDTOList(taskRepository.findTop5ByIsCompletedFalseOrderByCreatedAtDesc()))
                     .build();
         } catch (DataAccessException e) {
             log.error("SQL Error occurred while fetching recent tasks: ", e);
-            // Pass custom message for this exception
             throw new DataAccessException("Error fetching recent tasks from the database: " + e.getMessage()) {};
         }
     }
@@ -50,7 +47,6 @@ public class TaskServiceImpl implements TaskService {
             return taskMapper.toDTO(task);
         } catch (DataAccessException e) {
             log.error("SQL Error occurred while creating task: ", e);
-            // Pass custom message for this exception
             throw new DataAccessException("Error creating task in the database: " + e.getMessage()) {};
         }
     }
@@ -68,7 +64,6 @@ public class TaskServiceImpl implements TaskService {
             return taskMapper.toDTO(task);
         } catch (DataAccessException e) {
             log.error("SQL Error occurred while marking task as completed with ID: {}", id, e);
-            // Pass custom message for this exception
             throw new DataAccessException("Error marking task as completed in the database: " + e.getMessage()) {};
         }
     }

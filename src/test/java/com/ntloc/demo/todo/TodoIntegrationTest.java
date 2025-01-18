@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -114,7 +114,7 @@ public class TodoIntegrationTest extends AbstractTestcontainersTest {
         // When
         ResponseEntity<GlobalResponse<TaskResponseDTO>> response = testRestTemplate.exchange(
                 API_TASKS_PATH + "/" + task.getId() + "/complete"
-                , POST,
+                , PUT,
                 null,
                 new ParameterizedTypeReference<GlobalResponse<TaskResponseDTO>>() {}
         );
@@ -140,7 +140,7 @@ public class TodoIntegrationTest extends AbstractTestcontainersTest {
         // When
         ResponseEntity<GlobalResponse<TaskResponseDTO>> response = testRestTemplate.exchange(
                 API_TASKS_PATH + "/" + task.getId() + "/complete"
-                , POST,
+                , PUT,
                 null,
                 new ParameterizedTypeReference<GlobalResponse<TaskResponseDTO>>() {}
         );

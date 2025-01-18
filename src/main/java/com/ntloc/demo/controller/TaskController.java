@@ -40,7 +40,7 @@ public class TaskController {
                 .build();
     }
     //TODO: can be handled using a patch
-    @PostMapping("/{id}/complete")
+    @PutMapping("/{id}/complete")
     public GlobalResponse<TaskResponseDTO> markTaskAsCompleted(@PathVariable Long id) {
         return GlobalResponse.<TaskResponseDTO>builder()
                 .success(true)
